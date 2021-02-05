@@ -1,0 +1,24 @@
+---
+apiVersion: machinelearning.seldon.io/v1alpha2
+kind: SeldonDeployment
+metadata:
+  labels:
+    app: seldon
+  name: iris1
+spec:
+  name: cl-iris-knn-z1
+  predictors:
+  - componentSpecs:
+    - spec:
+        containers:
+        - image: msabr027/knn-iris:latest
+          imagePullPolicy: IfNotPresent
+          name: classifier
+    graph:
+      children: []
+      endpoint:
+        type: REST
+      name: classifier
+      type: MODEL
+    name: example
+    replicas: 1
