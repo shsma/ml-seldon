@@ -16,4 +16,6 @@ ENV API_TYPE REST
 ENV SERVICE_TYPE MODEL
 ENV PERSISTENCE 0
 
+RUN pip install -r external-private-packages.txt
+
 CMD exec seldon-core-microservice $MODEL_NAME $API_TYPE --service-type $SERVICE_TYPE --persistence $PERSISTENCE
