@@ -1,3 +1,4 @@
+import numpy as np
 import pickle
 import pandas as pd
 
@@ -23,4 +24,4 @@ class Iris(object):
             },
             raw_predictions.brand.keys()))
 
-        return predictions
+        return np.array(predictions)
