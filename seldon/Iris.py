@@ -1,22 +1,26 @@
-import numpy as np
+import pickle
 import pandas as pd
-import os
-from typing import Dict, List
-import joblib
-from sklearn.neighbors import KNeighborsClassifier as KNN
-from sklearn.neighbors import NearestNeighbors
 
 
 class Iris(object):
 
     def __init__(self):
-        self.knn_model = joblib.load('iris_model1.pkl')
-        
-    def predict(self,X,features_names):
-    
-        x_score = np.array(X)
-        
-        output1 = self.knn_model.predict(x_score)[0]
+        self.model = pickle.load(open('ml-bg.pkl', "rb"))
 
-        return np.array(output1)
+    def predict(self, X, features_names=None):
+        user_data = pd.read_json("[{\"b_g\": \"425 0\", \"total_hits\": 0.10170139230422684}]")
+        raw_predictions = self.model.predict(user_data)
 
+        if raw_predictions is None:
+            return []
+
+        predictions = list(map(
+            lambda k: {
+                'brand_id': raw_predictions.brand[k],
+                'gender': raw_predictions.gender[k],
+                'score': raw_predictions.score[k],
+                'liked': raw_predictions.liked[k]
+            },
+            raw_predictions.brand.keys()))
+
+        return predictions

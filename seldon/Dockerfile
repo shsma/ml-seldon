@@ -8,7 +8,7 @@ RUN pip install -r requirements.txt
 EXPOSE 5000
 
 # Add parent python path so we can find the deploy module
-ENV PYTHONPATH ../
+ENV PYTHONPATH .
 
 # Define environment variable for seldon
 ENV MODEL_NAME Iris
